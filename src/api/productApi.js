@@ -39,15 +39,3 @@ export const updateProduct = product => next =>
       }
   })
   .then(response => next(response));
-
-export const getCategories = next =>
-  fetch(`/stock/categories`, {
-    method: 'get',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      ...authorization()
-    }
-  })
-  .then(response => response.json())
-  .then(categories => next(categories));

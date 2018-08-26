@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-import { insertStock, updateStock, getStock } from '../api';
+import { insertCategory, updateCategory, getCategory } from '../api';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -19,13 +19,13 @@ const styles = theme => ({
     },
 });
 
-class EditStock extends React.Component {
+class EditCategory extends React.Component {
 
   state = { id: 0, name:"" };
   componentDidMount() {
     const {id} = this.props.match.params;
     if (id) {
-      getStock(id)(stock => this.setState({...stock}));
+      getCategory(id)(category => this.setState({...category}));
     }
   }
 
@@ -35,8 +35,8 @@ class EditStock extends React.Component {
     const {id} = this.props.match.params;
     const {push} = this.props.history;
     return id
-      ? updateStock({ ...this.state })(() => push(`/stocks/${id}`))
-      : insertStock({name:this.state.name})(stock => push(`/stocks/${stock.id}`));
+      ? updateCategory({ ...this.state })(() => push(`/categories/${id}`))
+      : insertCategory({name:this.state.name})(stock => push(`/categories/${stock.id}`));
   }
 
   render() {
@@ -46,7 +46,7 @@ class EditStock extends React.Component {
         <div>
           <Paper className={classes.root} elevation={4}>
             <TextField
-              label="Stock name"
+              label="Category name"
               placeholder="Start typing"
               className={classes.textField}
               margin="normal"
@@ -61,4 +61,4 @@ class EditStock extends React.Component {
   }
 };
 
-export default withStyles(styles)(EditStock);
+export default withStyles(styles)(EditCategory);

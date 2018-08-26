@@ -1,6 +1,7 @@
 import React from 'react';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -33,17 +34,18 @@ class Categories extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     return (
       <div className={classes.root}>
-        <List
-          component="nav"
-          subheader={<ListSubheader component="div">Categories</ListSubheader>}
-        >
+          <Button onClick={() => history.push("/createcategory")}>New catetgory</Button>
+          <List
+            component="nav"
+            subheader={<ListSubheader component="div">Categories</ListSubheader>}
+          >
           {this.state.categories.map(category =>
               <Category category={category}/>
           )}
-        </List>
+          </List>
       </div>
     )
   }

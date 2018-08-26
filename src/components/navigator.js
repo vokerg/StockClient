@@ -63,86 +63,89 @@ class Navigator extends React.Component  {
     const { anchorEl, drawer } = this.state;
     const username = (user !== null && user.username !== '') ? user.username : null
     const open = Boolean(anchorEl);
-    return (
-      <Paper className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton color="inherit" aria-label="Menu" className={classes.menuButton} onClick={this.toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
-              Stock app
-            </Typography>
-            <span>{username}</span>
-            <div>
-              {(username != null)
-                ?<div>
-                  <IconButton aria-haspopup="true" color="inherit" onClick={this.handleMenu}>
-                    {drafts.length > 0 ?
-                      <Badge className={classes.padding} badgeContent={drafts.length} color="secondary">
-                        <AccountCircle/>
-                      </Badge>
-                      : <AccountCircle/>
-                    }
+      return <Paper className={classes.root}>
+          <AppBar position="static">
+              <Toolbar>
+                  <IconButton color="inherit" aria-label="Menu" className={classes.menuButton}
+                              onClick={this.toggleDrawer(true)}>
+                      <MenuIcon/>
                   </IconButton>
-                  <Menu
-                      anchorEl={anchorEl}
-                      anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                      transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                      open={open}
-                      onClose = {this.closeMenu}
-                    >
-                      <MenuItem onClick={this.logout}>Logout</MenuItem>
-                      {drafts.map(draft =>
-                        <MenuItem key={draft.draftId} onClick={this.draftClick(draft.draftId)}>{draft.draftName}</MenuItem>
-                      )}
-                    </Menu>
+                  <Typography variant="title" color="inherit" className={classes.flex}>
+                      Stock app
+                  </Typography>
+                  <span>{username}</span>
+                  <div>
+                      {(username != null)
+                          ? <div>
+                              <IconButton aria-haspopup="true" color="inherit" onClick={this.handleMenu}>
+                                  {drafts.length > 0 ?
+                                      <Badge className={classes.padding} badgeContent={drafts.length} color="secondary">
+                                          <AccountCircle/>
+                                      </Badge>
+                                      : <AccountCircle/>
+                                  }
+                              </IconButton>
+                              <Menu
+                                  anchorEl={anchorEl}
+                                  anchorOrigin={{
+                                      vertical: 'top',
+                                      horizontal: 'right',
+                                  }}
+                                  transformOrigin={{
+                                      vertical: 'top',
+                                      horizontal: 'right',
+                                  }}
+                                  open={open}
+                                  onClose={this.closeMenu}
+                              >
+                                  <MenuItem onClick={this.logout}>Logout</MenuItem>
+                                  {drafts.map(draft =>
+                                      <MenuItem key={draft.draftId}
+                                                onClick={this.draftClick(draft.draftId)}>{draft.draftName}</MenuItem>
+                                  )}
+                              </Menu>
+                          </div>
+                          : <div>
+                              <Button color="inherit" onClick={this.redirect('login')}>Login</Button>
+                              <Button color="inherit" onClick={this.redirect('signup')}>Signup</Button>
+                          </div>
+                      }
                   </div>
-                  :<div>
-                    <Button color="inherit" onClick={this.redirect('login')}>Login</Button>
-                    <Button color="inherit" onClick={this.redirect('signup')}>Signup</Button>
-                  </div>
-                }
-              </div>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          anchor="left"
-          open={drawer}
-          onClose = {this.toggleDrawer(false)}
-        >
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer(false)}
-            onKeyDown={this.toggleDrawer(false)}
+              </Toolbar>
+          </AppBar>
+          <Drawer
+              anchor="left"
+              open={drawer}
+              onClose={this.toggleDrawer(false)}
           >
-            <div className={classes.list}>
-              <List>
-                <ListItem button onClick={this.redirect('stocks')}>
-                  <ListItemText primary="Stocks"/>
-                </ListItem>
-                <ListItem button onClick={this.redirect('products')}>
-                  <ListItemText primary="Products" />
-                </ListItem>
-                <ListItem button onClick={this.redirect('documents')}>
-                  <ListItemText primary="Documents" />
-                </ListItem>
-                <ListItem button onClick={this.redirect('orders')}>
-                  <ListItemText primary="Orders" />
-                </ListItem>
-              </List>
-            </div>
-          </div>
-        </Drawer>
+              <div
+                  tabIndex={0}
+                  role="button"
+                  onClick={this.toggleDrawer(false)}
+                  onKeyDown={this.toggleDrawer(false)}
+              >
+                  <div className={classes.list}>
+                      <List>
+                          <ListItem button onClick={this.redirect('stocks')}>
+                              <ListItemText primary="Stocks"/>
+                          </ListItem>
+                          <ListItem button onClick={this.redirect('products')}>
+                              <ListItemText primary="Products"/>
+                          </ListItem>
+                          <ListItem button onClick={this.redirect('documents')}>
+                              <ListItemText primary="Documents"/>
+                          </ListItem>
+                          <ListItem button onClick={this.redirect('orders')}>
+                              <ListItemText primary="Orders"/>
+                          </ListItem>
+                          <ListItem button onClick={this.redirect('categories')}>
+                              <ListItemText primary="Categories"/>
+                          </ListItem>
+                      </List>
+                  </div>
+              </div>
+          </Drawer>
       </Paper>
-    )
   }
 }
 
