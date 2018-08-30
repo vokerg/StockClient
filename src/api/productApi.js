@@ -15,6 +15,11 @@ export const getProductRests = id => next =>
     .then(response => response.json())
     .then(productRests => next(productRests));
 
+export const getProductTrees = () => next =>
+        fetch('/stock/productTree')
+            .then(response => response.json())
+            .then(productTrees => next(productTrees));
+
 export const insertProduct = product => next =>
   fetch('/stock/products/', {
       method: 'put',
