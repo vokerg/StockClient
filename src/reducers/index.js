@@ -4,8 +4,9 @@ import userData, * as fromUserData from './userData';
 import draftDocuments, * as fromDraftDocuments from './draftDocuments';
 import products, * as fromProducts from './products';
 import common, * as fromCommon from './common';
+import productTrees, * as fromProductTrees from './productTrees';
 
-export default combineReducers({userData, draftDocuments, products, common});
+export default combineReducers({userData, draftDocuments, products, common, productTrees});
 
 export const getCurrentUser = state => fromUserData.getCurrentUser(state.userData);
 export const getCurrentUserId = state => fromUserData.getCurrentUserId(state.userData);
@@ -15,3 +16,4 @@ export const getDraft = (state, draftId) => fromDraftDocuments.getDraft(state.dr
 export const getProducts = state => fromProducts.getProducts(state.products);
 export const getProduct = (state, id) => fromProducts.getProduct(state.products, id);
 export const getRedirectTo = state => fromCommon.getRedirectTo(state.common);
+export const getProductTrees = state => fromProductTrees.getProductTrees(state.productTrees);

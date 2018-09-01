@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from '@material-ui/core/styles';
 
 import {getProduct, getProductTrees, insertProduct, updateProduct} from '../api';
-import SelectProduct from "./editDocument/selectProduct";
 
 const styles = theme => ({
     root: theme.mixins.gutters({
@@ -24,16 +23,7 @@ const styles = theme => ({
 
 class EditProduct extends React.Component {
     state = {name: "", productTreeId: 0, productTrees: []};
-    onProductTreeChange = event => this.setState({ productTreeId: event.target.value });
-
-    componentDidMount() {
-        const {id} = this.props.match.params;
-        getProductTrees()(productTrees => this.setState({productTrees}))
-        if (id) {
-            getProduct(id)(product => this.setState({...product}));
-        }
-    }
-
+    onProductTreeChange = event => this.setState({productTreeId: event.target.value});
     onNameChange = event => this.setState({name: event.target.value});
     submitForm = event => {
         event.preventDefault();
@@ -41,8 +31,16 @@ class EditProduct extends React.Component {
         const {name, productTreeId} = this.state;
         const {push} = this.props.history;
         return id
-            ? updateProduct({id, name, productTreeId})(() => push(`/products/${id}`))
-            : insertProduct({name, productTreeId})(product => push(`/products/${product.id}`));
+            ? updateProduct({id, name, productTree: {id: productTreeId}})(() => push(`/products/${id}`))
+            : insertProduct({name, productTree: {id: productTreeId}})(product => push(`/products/${product.id}`));
+    }
+
+    componentDidMount() {
+        const {id} = this.props.match.params;
+        getProductTrees()(productTrees => this.setState({productTrees}))
+        if (id) {
+            getProduct(id)(product => this.setState({...product}));
+        }
     }
 
     render() {
@@ -60,11 +58,13 @@ class EditProduct extends React.Component {
                             onChange={this.onNameChange}
                         />
                         <Select
+                            label="Product tree"
+                            className={classes.textField}
                             value={this.state.productTreeId}
                             onChange={this.onProductTreeChange}
                         >
                             {this.state.productTrees.map(tree =>
-                                <MenuItem id={tree.id}>{tree.name}</MenuItem>
+                                <MenuItem value={tree.id}>{tree.name}</MenuItem>
                             )}
                         </Select>
                         <Button type="submit">Save</Button>
