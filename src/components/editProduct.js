@@ -32,12 +32,15 @@ class EditProduct extends React.Component {
         const {push} = this.props.history;
         return id
             ? updateProduct({id, name, productTree: {id: productTreeId}})(() => push(`/products/${id}`))
-            : insertProduct({name, productTree: {id: productTreeId}})(product => push(`/products/${product.id}`));
+            : insertProduct({name, productTree: {id: productTreeId}})(product => {
+                console.log("produccccct", product);
+                push(`/products/${product.id}`);
+            });
     }
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        getProductTrees()(productTrees => this.setState({productTrees}))
+        getProductTrees(productTrees => this.setState({productTrees}))
         if (id) {
             getProduct(id)(product => this.setState({...product}));
         }

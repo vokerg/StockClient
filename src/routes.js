@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import Stocks from './components/stocks';
 import EditStock from './components/editStock';
@@ -17,34 +17,37 @@ import ImageManagement from './components/product/imageManagement';
 import AccessDenied from './components/common/accessDenied';
 import Categories from './components/categories';
 import EditCategory from './components/editCategory';
+import EditProductTree from './components/editProductTree';
 
 const Routes = ({history}) => {
-  return (
-    <div>
-      <Navigator history={history}/>
-      <div>
-        <Route exact path="/" component= {Stocks} />
-        <Route exact path="/stocks" component= {Stocks} />
-        <Route exact path="/products" component= {Products} />
-        <Route exact path="/products/:id" component= {Product} />
-        <Route exact path="/products/:id/edit" component= {EditProduct} />
-        <Route exact path="/createproduct" component= {EditProduct} />
-        <Route exact path="/orders" component= {Orders} />
-        <Route exact path="/createstock" component= {EditStock} />
-        <Route exact path="/stocks/:id" component= {Stock} />
-        <Route exact path="/stocks/:id/edit" component= {EditStock} />
-        <Route exact path="/login" component= {Login} />
-        <Route exact path="/logout" component= {Logout} />
-        <Route exact path="/documents" component= {Documents} />
-        <Route exact path="/newdocument" component= {EditDocument} />
-        <Route exact path="/draftdocument/:draftId" component= {EditDocument} />
-        <Route exact path="/products/:id/imagemanagement" component= {ImageManagement} />
-        <Route exact path="/accessdenied" component= {AccessDenied} />
-        <Route exact path="/categories" component= {Categories} />
-        <Route exact path={"/createcategory"} component={EditCategory}/>
-      </div>
-    </div>
-  )
+    return (
+        <div>
+            <Navigator history={history}/>
+            <div>
+                <Route exact path="/" component={Stocks}/>
+                <Route exact path="/stocks" component={Stocks}/>
+                <Route exact path="/products" component={Products}/>
+                <Route exact path="/products/:id" component={Product}/>
+                <Route exact path="/products/:id/edit" component={EditProduct}/>
+                <Route exact path="/createproduct" component={EditProduct}/>
+                <Route exact path="/orders" component={Orders}/>
+                <Route exact path="/createstock" component={EditStock}/>
+                <Route exact path="/stocks/:id" component={Stock}/>
+                <Route exact path="/stocks/:id/edit" component={EditStock}/>
+                <Route exact path="/login" component={Login}/>
+                <Route exact path="/logout" component={Logout}/>
+                <Route exact path="/documents" component={Documents}/>
+                <Route exact path="/newdocument" component={EditDocument}/>
+                <Route exact path="/draftdocument/:draftId" component={EditDocument}/>
+                <Route exact path="/products/:id/imagemanagement" component={ImageManagement}/>
+                <Route exact path="/accessdenied" component={AccessDenied}/>
+                <Route exact path="/categories" component={Categories}/>
+                <Route exact path={"/createcategory"} component={EditCategory}/>
+                <Route exact path={"/createtree"} component={EditProductTree}/>
+                <Route exact path={"/producttree/:id/edit"} component={EditProductTree}/>
+            </div>
+        </div>
+    )
 }
 
 export default Routes;
