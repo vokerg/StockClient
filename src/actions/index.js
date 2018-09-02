@@ -59,3 +59,7 @@ const loadProductTrees = productTrees => ({
 export const fetchProductTrees = () => dispatch =>
     getProductTrees(productTrees => dispatch(loadProductTrees(productTrees)));
 
+export const setParentId = parentId => ({
+    type: "SET_PARENT_ID",
+    payload: {parentId}
+});
