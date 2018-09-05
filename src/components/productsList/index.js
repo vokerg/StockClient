@@ -27,11 +27,12 @@ class ProductsList extends React.Component {
         const showProducts = this.props.products.filter(product =>
             product.name.toUpperCase().includes(this.state.productFitler.toUpperCase())
         )
-        const {productTrees} = this.props;
+        const {productTrees, parentId} = this.props;
         return (
             <div>
-                <ProductsToolbar productFilter={this.state.productFilter} onFilterChange={this.onFilterChange}/>
-                <IconButton onClick={this.goBack(this.props.parentId)}>
+                <ProductsToolbar productFilter={this.state.productFilter} onFilterChange={this.onFilterChange}
+                                 parentId={parentId}/>
+                <IconButton onClick={this.goBack(parentId)}>
                     <ArrowBack/>
                 </IconButton>
                 <List>

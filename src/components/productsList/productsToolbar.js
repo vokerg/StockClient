@@ -13,11 +13,11 @@ const styles = theme => ({
     },
 });
 
-const ProductsView = ({productFilter, onFilterChange, classes}) => {
+const ProductsView = ({productFilter, onFilterChange, classes, parentId}) => {
     return (
         <Toolbar>
-            <Button href={`/createtree`}>New folder</Button>
-            <Button href={`/createproduct`}>New product</Button>
+            <Button href={`/createtree?parentId=${parentId}`}>New folder</Button>
+            <Button href={`/createproduct?parentId=${parentId}`}>New product</Button>
             <TextField
                 label="Product filter"
                 type="search"

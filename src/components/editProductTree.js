@@ -1,4 +1,5 @@
 import React from 'react';
+import queryString from 'query-string'
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -33,10 +34,13 @@ class EditProductTree extends React.Component {
     submitForm = event => {
         event.preventDefault();
         const {id} = this.props.match.params;
+        const {parentId} = queryString.parse(this.props.location.search);
+
+        console.log(parentId);
         const {push} = this.props.history;
         return id
             ? updateProductTree({ ...this.state })(() => push(`/products`))
-            : insertProductTree({name:this.state.name})(tree => push(`/products`));
+            : insertProductTree({name:this.state.name}, parentId)(tree => push(`/products`));
     }
 
     render() {

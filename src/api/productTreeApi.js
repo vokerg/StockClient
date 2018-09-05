@@ -10,8 +10,8 @@ export const getProductTree = id => next =>
         .then(response => response.json())
         .then(tree => next(tree));
 
-export const insertProductTree = productTree => next =>
-    fetch('/stock/productTree/', {
+export const insertProductTree = (productTree, parentId=0) => next =>
+    fetch(`/stock/productTree/${parentId}`, {
         method: 'put',
         body: JSON.stringify(productTree),
         headers: {
