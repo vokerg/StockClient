@@ -6,7 +6,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from '@material-ui/core/styles';
 
-import {getProduct, getProductTrees, insertProduct, updateProduct} from '../api';
+import {getProduct, getProductTrees, insertProduct, updateProduct, getCategories, getProductAttributes} from '../api';
+import queryString from "query-string";
 
 const styles = theme => ({
     root: theme.mixins.gutters({
@@ -22,31 +23,79 @@ const styles = theme => ({
 });
 
 class EditProduct extends React.Component {
-    state = {name: "", productTreeId: 0, productTrees: []};
-    onProductTreeChange = event => this.setState({productTreeId: event.target.value});
+    state = {name: "", productTree: {id: 0}, productTrees: [], categories: []};
+    onProductTreeChange = event => this.setState({productTree: {id: event.target.value}});
     onNameChange = event => this.setState({name: event.target.value});
     submitForm = event => {
         event.preventDefault();
         const {id} = this.props.match.params;
-        const {name, productTreeId} = this.state;
+        const {name, productTree, categories} = this.state;
+
+        const categoryAttributeProducts =
+            categories.map(cat => [
+                ...cat.categoryAttributes
+                    .filter(catAttr => catAttr.selected)
+                    .map(({id}) => ({categoryAttribute: {id}}))
+            ])
+                .reduce((arr, item) => [...arr, ...item], []);
+
         const {push} = this.props.history;
         return id
-            ? updateProduct({id, name, productTree: {id: productTreeId}})(() => push(`/products/${id}`))
-            : insertProduct({name, productTree: {id: productTreeId}})(product => {
-                console.log("produccccct", product);
-                push(`/products/${product.id}`);
-            });
+            ? updateProduct({id, name, productTree, categoryAttributeProducts})(() => push(`/products/${id}`))
+            : insertProduct({name, productTree, categoryAttributeProducts})(product =>
+                push(`/products/${product.id}`));
     }
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        getProductTrees(productTrees => this.setState({productTrees}))
+        getProductTrees(productTrees => this.setState({productTrees}));
         if (id) {
             getProduct(id)(product => this.setState({...product}));
+        } else {
+            const parentId = parseInt(queryString.parse(this.props.location.search).parentId);
+            if (parentId) {
+                this.setState({productTree: {id: parentId}});
+            }
         }
+
+        getCategories(cats => {
+            getProductAttributes(id)(productAttributes => {
+                const catAttrs = productAttributes.map(prAttr => prAttr.categoryAttribute.id);
+                const categories = cats.map(category => ({
+                    ...category,
+                    categoryAttributes: category.categoryAttributes.map(categoryAttribute => ({
+                        ...categoryAttribute, selected: catAttrs.includes(categoryAttribute.id)
+                    }))
+                }));
+                this.setState({categories});
+            });
+        });
     }
 
+    handleAttributeChange = categoryId => event => {
+        console.log(categoryId, event.target.value);
+        this.setState({
+            categories: this.state.categories.map(category => {
+                return category.id !== categoryId ? category :
+                    {
+                        ...category, categoryAttributes: category.categoryAttributes.map(catAttr =>
+                            catAttr.id === event.target.value ? {...catAttr, selected: true} : {
+                                ...catAttr,
+                                selected: false
+                            })
+                    }
+            })
+        });
+    }
+
+    getSelectedAttributes = category => {
+        const selected = category.categoryAttributes.filter(catAttr => catAttr.selected === true).map(catAttr => catAttr.id);
+        return category.multipleChoice ? selected : selected.length === 0 ? null : selected[0];
+    }
+
+
     render() {
+        console.log("state", this.state);
         const {classes} = this.props;
         return (
             <form onSubmit={this.submitForm}>
@@ -63,15 +112,35 @@ class EditProduct extends React.Component {
                         <Select
                             label="Product tree"
                             className={classes.textField}
-                            value={this.state.productTreeId}
+                            value={this.state.productTree.id}
                             onChange={this.onProductTreeChange}
                         >
                             {this.state.productTrees.map(tree =>
                                 <MenuItem value={tree.id}>{tree.name}</MenuItem>
                             )}
                         </Select>
-                        <Button type="submit">Save</Button>
                     </Paper>
+                    <Paper>
+                        {this.state.categories.map(category => {
+                            return (
+                                <div>
+                                    {category.name}
+                                    <Select
+                                        value={this.getSelectedAttributes(category)}
+                                        onChange={this.handleAttributeChange(category.id)}
+                                    >
+                                        {category.categoryAttributes.map(categoryAttribute => {
+                                            return (
+                                                <MenuItem
+                                                    value={categoryAttribute.id}>{categoryAttribute.name}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </div>
+                            )
+                        })}
+                    </Paper>
+                    <Button type="submit">Save</Button>
                 </div>
             </form>
         )

@@ -15,6 +15,11 @@ export const getProductRests = id => next =>
         .then(response => response.json())
         .then(productRests => next(productRests));
 
+export const getProductAttributes = id => next =>
+    fetch(`/stock/products/${id}/attributes`, {headers: {...authorization()}})
+        .then(response => response.json())
+        .then(productAttributes => next(productAttributes));
+
 export const insertProduct = product => next =>
     fetch('/stock/products/', {
         method: 'put',
