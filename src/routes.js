@@ -9,7 +9,7 @@ import Navigator from './components/navigator';
 import Orders from './components/orders';
 import Login from './components/login';
 import Logout from './components/logout';
-import EditProduct from './components/editProduct';
+import EditProduct from './components/editProduct/index';
 import Product from './components/product';
 import EditDocument from './components/editDocument';
 import Documents from './components/documents';
