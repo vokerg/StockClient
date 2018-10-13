@@ -31,11 +31,11 @@ const AddAttributeDialog = ({open, handleClose, name, onNameChange}) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleClose(false)} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
-                    Subscribe
+                <Button onClick={handleClose(true)} color="primary">
+                    Ok
                 </Button>
             </DialogActions>
         </Dialog>

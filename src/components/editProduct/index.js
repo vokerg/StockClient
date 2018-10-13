@@ -42,9 +42,10 @@ class EditProduct extends React.Component {
     handleAttributeChange = categoryId => event =>
         this.setState({
             categories: this.state.categories.map(category => {
-                return category.id !== categoryId ? category :
+                return (category.id !== categoryId) ? category :
                     {
-                        ...category, categoryAttributes: category.categoryAttributes.map(catAttr =>
+                        ...category,
+                        categoryAttributes: category.categoryAttributes.map(catAttr =>
                             catAttr.id === event.target.value ? {...catAttr, selected: true} : {
                                 ...catAttr,
                                 selected: false
@@ -57,7 +58,7 @@ class EditProduct extends React.Component {
         const selected = category.categoryAttributes
             .filter(catAttr => catAttr.selected === true)
             .map(catAttr => catAttr.id);
-        return category.multipleChoice ? selected : selected.length === 0 ? null : selected[0];
+        return (selected.length === 0) ? "0" : (category.multipleChoice) ? selected : selected[0];
     }
 
     componentDidMount() {

@@ -33,7 +33,8 @@ export const insertProduct = product => next =>
         .then(response => response.json())
         .then(product => next(product));
 
-export const updateProduct = product => next =>
+export const updateProduct = product => next => {
+    console.log("PRODUCT", product);
     fetch(`/stock/products/${product.id}`, {
         method: 'post',
         body: JSON.stringify(product),
@@ -44,3 +45,5 @@ export const updateProduct = product => next =>
         }
     })
         .then(response => next(response));
+}
+

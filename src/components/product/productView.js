@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import PictureGallery from '../common/pictureGallery';
 
-const ProductView = ({id, name, isAllowedProductEdit, productPictureIds}) => {
+const ProductView = ({id, name, isAllowedProductEdit, productPictureIds, children}) => {
   return (
     <div>
       <Toolbar>
@@ -13,7 +13,7 @@ const ProductView = ({id, name, isAllowedProductEdit, productPictureIds}) => {
         <Button href={`/products/${id}/edit`} disabled={!isAllowedProductEdit}>Edit</Button>
         <Button href={`/products/${id}/imagemanagement`} disabled={!isAllowedProductEdit}>Images</Button>
       </Toolbar>
-
+      {children}
       <PictureGallery
         productPictureIds={productPictureIds}
         imgPathStatic={`/metadata/images/product/${id}`}

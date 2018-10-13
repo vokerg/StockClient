@@ -53,3 +53,20 @@ export const addAttribute = (categoryId, attribute) => next =>
         }
     })
         .then(response => next(response));
+
+export const removeAttribute = (categoryId, attributeId) => next =>
+    fetch(`/stock/categories/${categoryId}/attributes/${attributeId}`, {
+        method: 'delete',
+        headers: {
+            ...authorization()
+        }
+    })
+        .then(response => next(response));
+
+export const removeCategory = id => next =>
+    fetch(`/stock/categories/${id}`, {
+        method: 'delete',
+        headers: {
+            ...authorization()
+        }
+    })

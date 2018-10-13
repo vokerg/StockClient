@@ -28,6 +28,7 @@ const EditProductAttributes = ({categories, getSelectedAttributes, handleAttribu
                                 id: 'cat-simple',
                             }}
                         >
+                            <MenuItem value={"0"}>{"Not specified"}</MenuItem>
                             {category.categoryAttributes.map(categoryAttribute =>
                                 <MenuItem key={categoryAttribute.id}
                                           value={categoryAttribute.id}>{categoryAttribute.name}</MenuItem>

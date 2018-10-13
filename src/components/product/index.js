@@ -5,6 +5,8 @@ import { getProduct, getProductRests, getProductPictures } from '../../api';
 import ProductView from './productView';
 import { getCurrentUser } from '../../reducers';
 import ProductTabs from './productTabs';
+import ProductTreeView from './productTreeView';
+import CategoryAttributeView from './categoryAttributeView';
 
 class Product extends React.Component {
   state = {
@@ -34,7 +36,10 @@ class Product extends React.Component {
           name={this.state.name}
           isAllowedProductEdit={isAllowedProductEdit}
           productPictureIds={this.state.productPictureIds}
-        />
+        >
+            <ProductTreeView/>
+            <CategoryAttributeView/>
+        </ProductView>
         <ProductTabs id={id} productRests={this.state.productRests}/>
       </div>
     )

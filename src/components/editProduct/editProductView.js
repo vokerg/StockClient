@@ -21,7 +21,7 @@ const styles = theme => ({
 
 const EditProductView = ({children, submitForm, name, onNameChange, onProductTreeChange, productTree, productTrees, classes}) => {
     return (
-        <form onSubmit={this.submitForm}>
+        <form onSubmit={submitForm}>
             <div>
                 <Paper className={classes.root} elevation={4}>
                     <TextField
