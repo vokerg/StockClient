@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ListSubheader from '@material-ui/core/ListSubheader';
 import {withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,15 +7,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import Create from '@material-ui/icons/Create';
 import Remove from '@material-ui/icons/Remove';
-import RemoveCircle from '@material-ui/icons/RemoveCircle';
 
 import AddAttributeDialog from './addAttributeDialog';
 import {addAttribute, removeAttribute, removeCategory} from '../../api';
@@ -42,11 +36,10 @@ class Category extends React.PureComponent {
         this.setState({newAttributeOpen: false, newAttributeName: ""});
     }
     onNewAttributeNameChange = event => this.setState({newAttributeName: event.target.value});
-    handleRemoveAttributeClick = attributeId => () => {
-        console.log(attributeId);
-        removeAttribute(this.props.category.id, attributeId)(() => console.log("removed!"));
-    };
-    handleDeleteCategory = () => removeCategory(this.props.category.id)(() => console.log("category removed"));
+    handleRemoveAttributeClick = attributeId => () =>
+        removeAttribute(this.props.category.id, attributeId)((response) => console.log(response));
+
+    handleDeleteCategory = () => removeCategory(this.props.category.id)(response => console.log(response));
 
     render() {
         const {category, classes} = this.props;
@@ -67,7 +60,7 @@ class Category extends React.PureComponent {
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         {category.categoryAttributes.map(attribute =>
-                            <ListItem className={classes.nested}>
+                            <ListItem key={attribute.id} className={classes.nested}>
                                 <ListItemText inset primary={attribute.name}/>
                                 <ListItemIcon onClick={this.handleRemoveAttributeClick(attribute.id)}>
                                     <Remove/>

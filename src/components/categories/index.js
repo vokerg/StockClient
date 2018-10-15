@@ -1,54 +1,39 @@
 import React from 'react';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import {connect} from 'react-redux';
 
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import CategoriesView from './categoriesView';
 
-import { getCategories } from '../../api';
-import Category from './category';
+import {fetchCategories} from '../../actions';
+import {getCategories} from "../../reducers";
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
+    root: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
 });
 
 class Categories extends React.Component {
-  state = { categories: [], open: false };
 
-  componentDidMount() {
-    getCategories(categories => this.setState({ categories }));
-  }
+    componentDidMount() {
+        this.props.fetchCategories();
+    }
 
-  render() {
-    const { classes, history } = this.props;
-    return (
-      <div className={classes.root}>
-          <Button onClick={() => history.push("/createcategory")}>New catetgory</Button>
-          <List
-            component="nav"
-            subheader={<ListSubheader component="div">Categories</ListSubheader>}
-          >
-          {this.state.categories.map(category =>
-              <Category category={category}/>
-          )}
-          </List>
-      </div>
-    )
-  }
+    render() {
+        const {history, categories} = this.props;
+        return (
+            <CategoriesView newCategory={() => history.push("/createcategory")} categories={categories}/>
+        )
+    }
 }
 
-export default withStyles(styles)(Categories);
+const mapStateToProps = state => ({
+    categories: getCategories(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchCategories: () => dispatch(fetchCategories())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);
