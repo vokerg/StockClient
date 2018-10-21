@@ -1,19 +1,11 @@
 import React from 'react';
 
-import {withStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import {connect} from 'react-redux';
 
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Create from '@material-ui/icons/Create';
-import Remove from '@material-ui/icons/Remove';
+import {addAttribute} from "../../actions";
+import {removeAttribute, removeCategory} from '../../api';
+import CategoryView from "./categoryView";
 
-import AddAttributeDialog from './addAttributeDialog';
-import {addAttribute, removeAttribute, removeCategory} from '../../api';
 
 
 const styles = theme => ({
@@ -31,7 +23,7 @@ class Category extends React.PureComponent {
 
     handleDialogClose = ok => () => {
         if (ok) {
-            addAttribute(this.props.category.id, {name: this.state.newAttributeName})(response => console.log(response));
+            this.props.addAttribute(this.props.category.id, {name: this.state.newAttributeName});
         }
         this.setState({newAttributeOpen: false, newAttributeName: ""});
     }
@@ -42,42 +34,27 @@ class Category extends React.PureComponent {
     handleDeleteCategory = () => removeCategory(this.props.category.id)(response => console.log(response));
 
     render() {
-        const {category, classes} = this.props;
+        const {category} = this.props;
+        const {open, newAttributeOpen, newAttributeName} = this.state;
         return (
-            <React.Fragment>
-                <ListItem>
-                    <ListItemText inset primary={category.name} onClick={this.handleClick}/>
-                    <ListItemIcon onClick={this.handleDeleteCategory}>
-                        <Remove/>
-                    </ListItemIcon>
-                    <ListItemIcon onClick={this.handleAddAttributeClick}>
-                        <Create/>
-                    </ListItemIcon>
-                    <span onClick={this.handleClick}>
-            {this.state.open ? <ExpandLess/> : <ExpandMore/>}
-          </span>
-                </ListItem>
-                <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        {category.categoryAttributes.map(attribute =>
-                            <ListItem key={attribute.id} className={classes.nested}>
-                                <ListItemText inset primary={attribute.name}/>
-                                <ListItemIcon onClick={this.handleRemoveAttributeClick(attribute.id)}>
-                                    <Remove/>
-                                </ListItemIcon>
-                            </ListItem>
-                        )}
-                    </List>
-                </Collapse>
-                <AddAttributeDialog
-                    open={this.state.newAttributeOpen}
-                    handleClose={this.handleDialogClose}
-                    name={this.state.newAttributeName}
-                    onNameChange={this.onNewAttributeNameChange}
-                />
-            </React.Fragment>
+            <CategoryView
+                category={category}
+                newAttributeOpen={newAttributeOpen}
+                handleDialogClose={this.handleDialogClose}
+                newAttributeName={newAttributeName}
+                onNewAttributeNameChange={this.onNewAttributeNameChange}
+                handleRemoveAttributeClick={this.handleRemoveAttributeClick}
+                handleAddAttributeClick={this.handleAddAttributeClick}
+                handleDeleteCategory={this.handleDeleteCategory}
+                handleClick={this.handleClick}
+                open={open}
+            />
         )
     }
 }
 
-export default withStyles(styles)(Category);
+const mapDispatchToProps = dispatch => ({
+    addAttribute: (categoryId, attribute) => dispatch(addAttribute(categoryId, attribute))
+})
+
+export default connect(() => ({}), mapDispatchToProps)(Category);

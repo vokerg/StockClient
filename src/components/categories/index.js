@@ -2,17 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import CategoriesView from './categoriesView';
-
 import {fetchCategories} from '../../actions';
 import {getCategories} from "../../reducers";
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-});
 
 class Categories extends React.Component {
 

@@ -42,7 +42,7 @@ export const updateCategory = category => next =>
     })
         .then(response => next(response));
 
-export const addAttribute = (categoryId, attribute) => next =>
+export const insertAttribute = (categoryId, attribute) => next =>
     fetch(`/stock/categories/${categoryId}/attributes`, {
         method: 'put',
         body: JSON.stringify(attribute),
