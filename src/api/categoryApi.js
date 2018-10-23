@@ -52,6 +52,7 @@ export const insertAttribute = (categoryId, attribute) => next =>
             ...authorization()
         }
     })
+        .then(response => response.json())
         .then(response => next(response));
 
 export const removeAttribute = (categoryId, attributeId) => next =>
@@ -70,3 +71,4 @@ export const removeCategory = id => next =>
             ...authorization()
         }
     })
+        .then(response => next(response));
