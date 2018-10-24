@@ -2,8 +2,7 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
-import {addAttribute} from "../../actions";
-import {removeAttribute, removeCategory} from '../../api';
+import {addAttribute, deleteAttribute} from "../../actions";
 import CategoryView from "./categoryView";
 
 
@@ -16,22 +15,21 @@ const styles = theme => ({
 
 class Category extends React.PureComponent {
     state = {open: false, newAttributeOpen: false, newAttributeName: ""};
+
     handleClick = () => this.setState({open: !this.state.open});
 
-    handleAddAttributeClick = event =>
-        this.setState({newAttributeOpen: true});
+    handleAddAttributeClick = event => this.setState({newAttributeOpen: true});
 
-    handleDialogClose = ok => () => {
-        if (ok) {
-            this.props.addAttribute(this.props.category.id, {name: this.state.newAttributeName});
-        }
-        this.setState({newAttributeOpen: false, newAttributeName: ""});
-    }
+    handleDialogClose = ok => () =>
+        (ok) ?
+            this.props.addAttribute(this.props.category.id, {name: this.state.newAttributeName})
+            : this.setState({newAttributeOpen: false, newAttributeName: ""});
+
     onNewAttributeNameChange = event => this.setState({newAttributeName: event.target.value});
-    handleRemoveAttributeClick = attributeId => () =>
-        removeAttribute(this.props.category.id, attributeId)((response) => console.log(response));
 
-    handleDeleteCategory = () => removeCategory(this.props.category.id)(response => console.log(response));
+    handleRemoveAttributeClick = attributeId => () => this.props.deleteAttribute(this.props.category.id, attributeId);
+
+    handleDeleteCategory = () => this.props.deleteCategory(this.props.category.id);
 
     render() {
         const {category} = this.props;
@@ -54,7 +52,9 @@ class Category extends React.PureComponent {
 }
 
 const mapDispatchToProps = dispatch => ({
-    addAttribute: (categoryId, attribute) => dispatch(addAttribute(categoryId, attribute))
+    addAttribute: (categoryId, attribute) => dispatch(addAttribute(categoryId, attribute)),
+    deleteAttribute: (categoryId, attributeId) => dispatch(deleteAttribute(categoryId, attributeId)),
+    deleteCategory: categoryId => dispatch(deleteCategory(categoryId))
 })
 
 export default connect(() => ({}), mapDispatchToProps)(Category);
