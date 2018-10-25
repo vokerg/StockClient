@@ -2,10 +2,9 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
-import {addAttribute, deleteAttribute} from "../../actions";
+import {addAttribute, deleteAttribute, deleteCategory} from "../../actions";
 import CategoryView from "./categoryView";
-
-
+import AddAttributeDialog from "./addAttributeDialog";
 
 const styles = theme => ({
     nested: {
@@ -14,7 +13,11 @@ const styles = theme => ({
 });
 
 class Category extends React.PureComponent {
-    state = {open: false, newAttributeOpen: false, newAttributeName: ""};
+    state = {
+        open: false,
+        newAttributeOpen: false,
+        newAttributeName: ""
+    };
 
     handleClick = () => this.setState({open: !this.state.open});
 
@@ -35,18 +38,23 @@ class Category extends React.PureComponent {
         const {category} = this.props;
         const {open, newAttributeOpen, newAttributeName} = this.state;
         return (
-            <CategoryView
-                category={category}
-                newAttributeOpen={newAttributeOpen}
-                handleDialogClose={this.handleDialogClose}
-                newAttributeName={newAttributeName}
-                onNewAttributeNameChange={this.onNewAttributeNameChange}
-                handleRemoveAttributeClick={this.handleRemoveAttributeClick}
-                handleAddAttributeClick={this.handleAddAttributeClick}
-                handleDeleteCategory={this.handleDeleteCategory}
-                handleClick={this.handleClick}
-                open={open}
-            />
+            <React.Fragment>
+                <CategoryView
+                    category={category}
+                    handleRemoveAttributeClick={this.handleRemoveAttributeClick}
+                    handleAddAttributeClick={this.handleAddAttributeClick}
+                    handleDeleteCategory={this.handleDeleteCategory}
+                    handleClick={this.handleClick}
+                    open={open}
+                />
+                <AddAttributeDialog
+                    open={newAttributeOpen}
+                    handleClose={this.handleDialogClose}
+                    name={newAttributeName}
+                    onNameChange={this.onNewAttributeNameChange}
+                />
+            </React.Fragment>
+
         )
     }
 }

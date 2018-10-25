@@ -22,10 +22,10 @@ const categories = (state = [], action) => {
 
         case DELETE_ATTRIBUTE: {
             const {categoryId, attributeId} = action.payload;
-            return state.map(category => {
+            return state.map(category =>
                 category.id !== categoryId ? {...category}
                     : {...category, categoryAttributes: category.categoryAttributes.filter(attribute => attribute.id !== attributeId)}
-            });
+            );
         }
 
         default:

@@ -24,10 +24,6 @@ const styles = theme => ({
 
 const CategoryView = ({
                           category,
-                          newAttributeOpen,
-                          handleDialogClose,
-                          newAttributeName,
-                          onNewAttributeNameChange,
                           handleRemoveAttributeClick,
                           handleAddAttributeClick,
                           handleDeleteCategory,
@@ -61,12 +57,6 @@ const CategoryView = ({
                     )}
                 </List>
             </Collapse>
-            <AddAttributeDialog
-                open={newAttributeOpen}
-                handleClose={handleDialogClose}
-                name={newAttributeName}
-                onNameChange={onNewAttributeNameChange}
-            />
         </React.Fragment>
     )
 }

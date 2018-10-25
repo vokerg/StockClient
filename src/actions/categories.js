@@ -28,4 +28,4 @@ const deleteCategoryState = categoryId => ({
    payload: {categoryId}
 });
 export const deleteCategory = categoryId => dispatch =>
-    removeCategory(id)(result => dispatch(deleteCategoryState(categoryId)));
+    removeCategory(categoryId)(result => dispatch(deleteCategoryState(categoryId)));
