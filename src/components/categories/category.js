@@ -6,12 +6,6 @@ import {addAttribute, deleteAttribute, deleteCategory} from "../../actions";
 import CategoryView from "./categoryView";
 import AddAttributeDialog from "./addAttributeDialog";
 
-const styles = theme => ({
-    nested: {
-        paddingLeft: theme.spacing.unit * 4,
-    },
-});
-
 class Category extends React.PureComponent {
     state = {
         open: false,

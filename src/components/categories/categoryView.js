@@ -13,9 +13,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Create from '@material-ui/icons/Create';
 import Remove from '@material-ui/icons/Remove';
 
-import AddAttributeDialog from './addAttributeDialog';
-
-
 const styles = theme => ({
     nested: {
         paddingLeft: theme.spacing.unit * 4,

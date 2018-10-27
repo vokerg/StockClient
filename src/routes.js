@@ -16,7 +16,7 @@ import Documents from './components/documents';
 import ImageManagement from './components/product/imageManagement';
 import AccessDenied from './components/common/accessDenied';
 import Categories from './components/categories';
-import EditCategory from './components/editCategory';
+import EditCategory from './components/editCategory/index';
 import EditProductTree from './components/editProductTree';
 
 const Routes = ({history}) => {
@@ -43,6 +43,7 @@ const Routes = ({history}) => {
                 <Route exact path="/accessdenied" component={AccessDenied}/>
                 <Route exact path="/categories" component={Categories}/>
                 <Route exact path={"/createcategory"} component={EditCategory}/>
+                <Route exact path={"/categories/:id/edit"} component={EditCategory}/>
                 <Route exact path={"/createtree"} component={EditProductTree}/>
                 <Route exact path={"/producttree/:id/edit"} component={EditProductTree}/>
             </div>

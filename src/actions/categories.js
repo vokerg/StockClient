@@ -1,5 +1,5 @@
-import {getCategories, insertAttribute, removeAttribute, removeCategory} from "../api";
-import {ADD_ATTRIBUTE, DELETE_ATTRIBUTE, DELETE_CATEGORY, LOAD_CATEGORIES} from "./actionTypes";
+import {getCategories, insertAttribute, insertCategory, removeAttribute, removeCategory} from "../api";
+import {ADD_ATTRIBUTE, ADD_CATEGORY, DELETE_ATTRIBUTE, DELETE_CATEGORY, LOAD_CATEGORIES} from "./actionTypes";
 
 const loadCategories = categories => ({
     type: LOAD_CATEGORIES,
@@ -29,3 +29,10 @@ const deleteCategoryState = categoryId => ({
 });
 export const deleteCategory = categoryId => dispatch =>
     removeCategory(categoryId)(result => dispatch(deleteCategoryState(categoryId)));
+
+const addCategoryState = category => ({
+    type: ADD_CATEGORY,
+    payload: {category}
+});
+export const addCategory = category => dispatch =>
+    insertCategory(category)(result => dispatch(addCategoryState(category)));

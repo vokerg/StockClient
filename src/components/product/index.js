@@ -27,7 +27,7 @@ class Product extends React.Component {
 
   render() {
     const {id} = this.props.match.params;
-    const {user, classes, theme} = this.props;
+    const {user} = this.props;
     const isAllowedProductEdit = user !== null ? user.isAllowedProductEdit : false;
     return (
       <div>

@@ -1,6 +1,7 @@
 import {ADD_ATTRIBUTE, DELETE_ATTRIBUTE, DELETE_CATEGORY, LOAD_CATEGORIES} from "../actions/actionTypes";
 
 export const getCategories = categories => categories;
+export const getCategory = (categories, id) => categories.find(categories => categories.id.toString() === id.toString());
 
 const categories = (state = [], action) => {
     const {payload} = action;

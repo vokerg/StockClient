@@ -1,6 +1,5 @@
 import {getProducts, getProductTrees} from '../api';
 import {getCurrentUserId} from '../reducers';
-import categories from "../reducers/categories";
 
 export const stateLogin = (authorization, user) => ({
     type: 'LOGIN',

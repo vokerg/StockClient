@@ -13,7 +13,6 @@ const productTrees = (state = [], action) => {
     switch (action.type) {
         case "LOAD_PRODUCT_TREES" :
             return [...action.payload.productTrees];
-            break;
         default:
             return state;
     }
@@ -23,7 +22,6 @@ const parentId = (state = 0, action) => {
     switch (action.type) {
         case "SET_PARENT_ID":
             return action.payload.parentId;
-            break;
         default:
             return state;
     }
