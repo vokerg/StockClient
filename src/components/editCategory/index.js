@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {insertCategory, updateCategory} from '../../api/index';
 import EditCategoryView from "./editCategoryView";
 import {getCategory} from "../../reducers";
-import {fetchCategories} from "../../actions";
+import {addCategory, editCategory, fetchCategories} from "../../actions";
 
 class EditCategory extends React.Component {
 
@@ -22,18 +21,27 @@ class EditCategory extends React.Component {
             this.setState({...category});
         }
     }
+    saveCategory = () => {
+        const {editCategory, addCategory, match, history} = this.props;
+        const {id} = match.params;
+        const {push} = history;
+        if (id) {
+            editCategory(this.state);
+        } else {
+            addCategory(this.state);
+        }
+        push('/categories');
+    }
 
     onNameChange = event => this.setState({name: event.target.value});
+
     onMultipleChoiceChange = event => this.setState({multipleChoice: event.target.checked});
+
     submitForm = event => {
         event.preventDefault();
-        const {id} = this.props.match.params;
-        const {push} = this.props.history;
-        const {name, multipleChoice} = this.state;
-        return id
-            ? updateCategory({...this.state})(() => push(`/categories/${id}`))
-            : insertCategory({name, multipleChoice})(stock => push(`/categories/${stock.id}`));
+        this.saveCategory();
     }
+
 
     render() {
         const {name, multipleChoice} = this.state;
@@ -59,7 +67,9 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = dipsatch => ({
-    fetchCategories: () => dipsatch(fetchCategories())
+    fetchCategories: () => dipsatch(fetchCategories()),
+    editCategory: category => dipsatch(editCategory(category)),
+    addCategory: category => dipsatch(addCategory(category))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);
