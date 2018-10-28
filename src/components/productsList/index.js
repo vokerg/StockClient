@@ -11,12 +11,13 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 
 import ProductsToolbar from './productsToolbar';
-import {getProductTrees, getProductsByCurrentParentId, getParentId, getPreviousParentId} from '../../reducers';
-import {setParentId} from '../../actions';
+import {getProductTrees, getProductsByCurrentParentId, getParentId, getPreviousParentId, getIsListView} from '../../reducers';
+import {setListView, setParentId} from '../../actions';
+import ProductsFilter from "./productsFilter";
 
 class ProductsList extends React.Component {
 
-    state = ({productFitler: ''})
+    state = ({productFitler: ''});
 
     onFilterChange = event => this.setState({productFitler: event.target.value});
     onTreeClick = parentId => event => this.props.setParentId(parentId);
@@ -30,8 +31,8 @@ class ProductsList extends React.Component {
         const {productTrees, parentId} = this.props;
         return (
             <div>
-                <ProductsToolbar productFilter={this.state.productFilter} onFilterChange={this.onFilterChange}
-                                 parentId={parentId}/>
+                <ProductsToolbar parentId={parentId} changeListView={this.props.setListView} isListView={this.props.getIsListView}/>
+                <ProductsFilter productFilter={this.state.productFilter} onFilterChange={this.onFilterChange}/>
                 <IconButton onClick={this.goBack(parentId)}>
                     <ArrowBack/>
                 </IconButton>
@@ -80,11 +81,13 @@ const mapStateToProps = state => ({
     productTrees: getProductTrees(state),
     products: getProductsByCurrentParentId(state),
     parentId: getParentId(state),
+    getIsListView: getIsListView(state),
     previousParentId: parentId => getPreviousParentId(state, parentId)
 });
 
 const mapDispatchToProps = dispatch => ({
-    setParentId: id => dispatch(setParentId(id))
+    setParentId: id => dispatch(setParentId(id)),
+    setListView: () => dispatch(setListView())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

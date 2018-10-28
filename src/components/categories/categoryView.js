@@ -11,7 +11,9 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Create from '@material-ui/icons/Create';
+import Clear from '@material-ui/icons/Clear';
 import Remove from '@material-ui/icons/Remove';
+import Add from '@material-ui/icons/Add';
 
 const styles = theme => ({
     nested: {
@@ -24,6 +26,7 @@ const CategoryView = ({
                           handleRemoveAttributeClick,
                           handleAddAttributeClick,
                           handleDeleteCategory,
+                          handleEditCategory,
                           handleClick,
                           open,
                           classes
@@ -33,10 +36,13 @@ const CategoryView = ({
             <ListItem>
                 <ListItemText inset primary={category.name} onClick={handleClick}/>
                 <ListItemIcon onClick={handleDeleteCategory}>
-                    <Remove/>
+                    <Clear/>
+                </ListItemIcon>
+                <ListItemIcon onClick={handleEditCategory}>
+                    <Create/>
                 </ListItemIcon>
                 <ListItemIcon onClick={handleAddAttributeClick}>
-                    <Create/>
+                    <Add/>
                 </ListItemIcon>
                 <span onClick={handleClick}>
                     {open ? <ExpandLess/> : <ExpandMore/>}

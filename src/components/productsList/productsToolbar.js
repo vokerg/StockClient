@@ -1,33 +1,22 @@
 import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import {withStyles} from '@material-ui/core/styles';
+import FolderIcon from '@material-ui/icons/Folder';
+import ViewList from '@material-ui/icons/ViewList';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Add from "../../../node_modules/@material-ui/icons/Add";
+import ListItem from "@material-ui/core/ListItem";
 
-const styles = theme => ({
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        marginTop: 0,
-        width: 200,
-    },
-});
-
-const ProductsView = ({productFilter, onFilterChange, classes, parentId}) => {
+const ProductsView = ({parentId, isListView, changeListView}) => {
     return (
         <Toolbar>
             <Button href={`/createtree?parentId=${parentId}`}>New folder</Button>
             <Button href={`/createproduct?parentId=${parentId}`}>New product</Button>
-            <TextField
-                label="Product filter"
-                type="search"
-                className={classes.textField}
-                margin="normal"
-                value={productFilter}
-                onChange={onFilterChange}
-            />
+            <ListItemIcon onClick={changeListView}>
+                {isListView ? <ViewList/> : <FolderIcon/> }
+            </ListItemIcon>
         </Toolbar>
     )
 }
 
-export default withStyles(styles)(ProductsView);
+export default ProductsView;

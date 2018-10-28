@@ -28,6 +28,8 @@ class Category extends React.PureComponent {
 
     handleDeleteCategory = () => this.props.deleteCategory(this.props.category.id);
 
+    handleEditCategory = () => this.props.history.push(`/categories/${this.props.category.id}/edit`);
+
     render() {
         const {category} = this.props;
         const {open, newAttributeOpen, newAttributeName} = this.state;
@@ -39,6 +41,7 @@ class Category extends React.PureComponent {
                     handleAddAttributeClick={this.handleAddAttributeClick}
                     handleDeleteCategory={this.handleDeleteCategory}
                     handleClick={this.handleClick}
+                    handleEditCategory={this.handleEditCategory}
                     open={open}
                 />
                 <AddAttributeDialog

@@ -14,7 +14,7 @@ const styles = theme => ({
     },
 });
 
-const CategoriesView = ({classes, categories, newCategory}) => {
+const CategoriesView = ({classes, categories, newCategory, history}) => {
     return (
         <div className={classes.root}>
             <Button onClick={newCategory}>New catetgory</Button>
@@ -23,7 +23,7 @@ const CategoriesView = ({classes, categories, newCategory}) => {
                 subheader={<ListSubheader component="div">Categories</ListSubheader>}
             >
                 {categories.map(category =>
-                    <Category key={category.id} category={category}/>
+                    <Category key={category.id} category={category} history={history}/>
                 )}
             </List>
         </div>

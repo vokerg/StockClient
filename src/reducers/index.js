@@ -20,5 +20,6 @@ export const getProductsByCurrentParentId = state => fromProducts.getProductsByC
 export const getProduct = (state, id) => fromProducts.getProduct(state.products, id);
 export const getRedirectTo = state => fromCommon.getRedirectTo(state.common);
 export const getProductTrees = state => fromProducts.getProductTrees(state.products);
+export const getIsListView = state => fromProducts.getIsListView(state.products);
 export const getCategories = state => fromCategories.getCategories(state.categories);
 export const getCategory = (state, id) => fromCategories.getCategory(state.categories, id);

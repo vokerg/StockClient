@@ -14,7 +14,7 @@ class Categories extends React.Component {
     render() {
         const {history, categories} = this.props;
         return (
-            <CategoriesView newCategory={() => history.push("/createcategory")} categories={categories}/>
+            <CategoriesView newCategory={() => history.push("/createcategory")} categories={categories} history={history}/>
         )
     }
 }

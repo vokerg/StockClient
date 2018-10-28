@@ -64,4 +64,8 @@ export const setParentId = parentId => ({
     payload: {parentId}
 });
 
+export const setListView = () => ({
+    type: "SET_LIST_VIEW"
+});
+
 export * from './categories';
