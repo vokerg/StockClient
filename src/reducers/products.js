@@ -1,9 +1,23 @@
 import {combineReducers} from 'redux';
 
+const loadParents = (id, trees) => {
+    const result = [];
+    let parent = trees.find(tree => tree.id === id);
+    while (parent) {
+        result.push(parent);
+        parent = trees.find(tree => tree.id == parent.parentId);
+    }
+    return result;
+}
+
 const products = (state = [], action) => {
     switch (action.type) {
         case 'LOAD_PRODUCTS':
-            return [...action.payload.products];
+            const prods = action.payload.products.map(product => {
+                product.parents = loadParents(product.productTree.id, action.payload.productTrees);
+                return product
+            });
+            return [...prods];
         default:
             return state;
     }
@@ -11,7 +25,7 @@ const products = (state = [], action) => {
 
 const productTrees = (state = [], action) => {
     switch (action.type) {
-        case "LOAD_PRODUCT_TREES" :
+        case "LOAD_PRODUCTS" :
             return [...action.payload.productTrees];
         default:
             return state;
@@ -40,11 +54,13 @@ const getTreeParentId = (treeId, state) => {
 }
 
 const isSubParent = (child, parent, state) => {
-        console.log("Child: " + child, " Parent: " + parent);
         if ((child !== 0) && (child !== parent)) {
             if (isSubParent(getTreeParentId(child, state), parent, state)) {
                 return true;
             }
+        }
+        if (child === parent) {
+            return true;
         }
         return false;
 }

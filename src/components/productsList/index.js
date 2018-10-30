@@ -14,6 +14,7 @@ import ProductsToolbar from './productsToolbar';
 import {getProductTrees, getProductsByCurrentParentId, getParentId, getPreviousParentId, getIsListView} from '../../reducers';
 import {setListView, setParentId} from '../../actions';
 import ProductsFilter from "./productsFilter";
+import ProductTreeView from "./ProductTreeView";
 
 class ProductsList extends React.Component {
 
@@ -68,7 +69,11 @@ class ProductsList extends React.Component {
                                 disableRipple
                             />
                             }
-                            <ListItemText primary={product.name}/>
+                            <ListItemText>
+                                <span>{product.name}</span>
+                                <ProductTreeView product={product}/>
+                            </ListItemText>
+
                         </ListItem>
                     )}
                 </List>

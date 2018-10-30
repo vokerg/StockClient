@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {fetchProducts, fetchProductTrees, setParentId} from '../actions';
+import {fetchProducts, setParentId} from '../actions';
 import ProductsList from './productsList';
 
 const redirectToProductId = push => productId => () => push(`products/${productId}`);
@@ -9,7 +9,6 @@ const redirectToProductId = push => productId => () => push(`products/${productI
 const Products = ({history, fetchProducts, fetchProductTrees, initializeParentId}) => {
     initializeParentId();
     fetchProducts();
-    fetchProductTrees();
     return (
         <div>
             <ProductsList selectProduct={redirectToProductId(history.push)}/>
@@ -19,7 +18,6 @@ const Products = ({history, fetchProducts, fetchProductTrees, initializeParentId
 
 const mapDispatchToProps = dispatch => ({
     fetchProducts: () => dispatch(fetchProducts()),
-    fetchProductTrees: () => dispatch(fetchProductTrees()),
     initializeParentId: () => dispatch(setParentId(0))
 })
 

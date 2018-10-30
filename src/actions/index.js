@@ -43,14 +43,23 @@ export const redirectToLogin = () => doRedirect("login");
 
 export const redirect = () => ({type: 'REDIRECT'});
 
+/*
 const loadProducts = products => ({
     type: 'LOAD_PRODUCTS',
     payload: {products}
 });
+*/
+
+const loadProducts = (products, productTrees) => ({
+    type: 'LOAD_PRODUCTS',
+    payload: {products, productTrees}
+});
 
 export const fetchProducts = () => dispatch =>
-    getProducts(products => dispatch(loadProducts(products)));
+    //getProducts(products => dispatch(loadProducts(products)));
+    getProductTrees(productTrees => getProducts(products => dispatch(loadProducts(products, productTrees))));
 
+/*
 const loadProductTrees = productTrees => ({
     type: "LOAD_PRODUCT_TREES",
     payload: {productTrees}
@@ -58,6 +67,7 @@ const loadProductTrees = productTrees => ({
 
 export const fetchProductTrees = () => dispatch =>
     getProductTrees(productTrees => dispatch(loadProductTrees(productTrees)));
+*/
 
 export const setParentId = parentId => ({
     type: "SET_PARENT_ID",
